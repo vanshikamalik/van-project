@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserList from './Components/UserList'
@@ -7,7 +7,7 @@ import UserList from './Components/UserList'
 function App() {
   return (
     <div className="App">
-      <UserList/>
+      <UserList />
     </div>
   );
 }

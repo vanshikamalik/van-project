@@ -6,7 +6,8 @@ import { getUsers } from '../Actions/index';
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import constant from '../Constant'
-
+import { useHistory, withRouter } from 'react-router-dom';
+import Navbar from './Layout/Navbar'
 const marginTop = {
     marginTop: '30px'
 }
@@ -14,6 +15,7 @@ const setRadius = {
     borderRadius: '50%'
 }
 function UserList(props) {
+    const history = useHistory();
     const [allusers, setUsers] = useState({});
     const [page, setPage] = useState(1);
     const countPerPage = 3;
@@ -68,6 +70,7 @@ function UserList(props) {
     }))
     return (
         <>
+            <Navbar />
             <Container>
                 <div style={marginTop}>
                     <h3>{constant.UserListHeading}</h3>
@@ -81,6 +84,7 @@ function UserList(props) {
                         pagination={true}
                         paginationTotalRows={10}
                         paginationPerPage={3}
+                        onRowClicked={handleChange}
                     />
                     {/* <Table striped bordered hover>
                         <thead>
@@ -108,6 +112,15 @@ function UserList(props) {
                 </Row>
             </Container>
         </>)
+    //functions 
+    function handleChange(props) {
+        history.push({
+            pathname: 'User/' + props.id,
+            state: {
+                response: props
+            }
+        })
+    }
 }
 const mapDispatchToProps = {
     getUsers: getUsers
@@ -115,4 +128,4 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
     users: state.users,
 })
-export default connect(mapStateToProps, mapDispatchToProps)(UserList)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserList))

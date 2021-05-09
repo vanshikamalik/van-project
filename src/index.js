@@ -9,6 +9,9 @@ import { Provider } from 'react-redux';
 import { logger } from 'redux-logger';
 import reducer from './Reducers';
 import rootSaga from './Sagas';
+import { BrowserRouter as Router } from 'react-router-dom';
+import routes from './Routes/NavbarRoutes'
+
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(

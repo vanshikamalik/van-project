@@ -2,12 +2,13 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
-import { getUsers } from '../Actions/index';
+import { getUsers, getUserDetails } from '../Actions/index';
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import constant from '../Constant'
 import { useHistory, withRouter } from 'react-router-dom';
-import Navbar from './Layout/Navbar'
+import Navbar from './Layout/Navbar';
+
 const marginTop = {
     marginTop: '30px'
 }
@@ -16,9 +17,6 @@ const setRadius = {
 }
 function UserList(props) {
     const history = useHistory();
-    const [allusers, setUsers] = useState({});
-    const [page, setPage] = useState(1);
-    const countPerPage = 3;
     const { users, getUsers } = props;
     //use effect to dispatch the actions
     useEffect(() => {
@@ -61,6 +59,7 @@ function UserList(props) {
         },
     ];
     const data = users.map((val, index) => ({
+        key: index,
         id: val.id,
         title: val.title,
         firstName: val.firstName,
@@ -75,7 +74,6 @@ function UserList(props) {
                 <div style={marginTop}>
                     <h3>{constant.UserListHeading}</h3>
                 </div>
-                <br></br>
                 <Row>
                     <DataTable
                         columns={columns}
@@ -116,9 +114,7 @@ function UserList(props) {
     function handleChange(props) {
         history.push({
             pathname: 'User/' + props.id,
-            state: {
-                response: props
-            }
+            data: props
         })
     }
 }

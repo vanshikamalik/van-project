@@ -1,18 +1,11 @@
-import { put, takeLatest, all } from 'redux-saga/effects';
-import ActionConstant from '../Constant'
-function* getUsers() {
-    const json = yield fetch('https://dummyapi.io/data/api/user', {
-        method: 'GET',
-        headers: { 'app-id': '609067161288b4504732bed3' }
-    })
-        .then(response => response.json());
-    yield put({ type: ActionConstant.RECIEVED_USERS, json: json.data, });
-}
-function* actionWatcher() {
-    yield takeLatest(ActionConstant.GET_USERS, getUsers)
-}
+import { fork, all } from 'redux-saga/effects';
+import UserSaga from './UserSaga'
+import PostSaga from './PostSaga'
+
 export default function* rootSaga() {
+    //fork is used for running non blocking task or sagas
     yield all([
-        actionWatcher(),
+        fork(UserSaga), // saga1 can also yield [ fork(actionOne), fork(actionTwo) ]
+        fork(PostSaga)
     ]);
 }

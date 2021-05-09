@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Navbar from './Layout/Navbar'
+import { useParams, withRouter } from 'react-router-dom';
+import { getUserDetails } from '../Actions/index';
+import { connect } from 'react-redux';
 
-export default function UserDetails() {
+
+function UserDetails(props) {
+    const { UserID } = useParams();
+    useEffect(() => {
+        //code here
+        console.log(UserID, "UserIDUserIDUserIDUserIDUserID")
+    }, [])
     return (<>
         <Navbar />
         <Container>
@@ -21,3 +30,7 @@ export default function UserDetails() {
         </Container>
     </>)
 }
+const mapDispatchToProps = {
+    getUsersDetails: getUserDetails
+}
+export default connect(null, mapDispatchToProps)(withRouter(UserDetails))
